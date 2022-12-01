@@ -16,18 +16,17 @@ import numpy as np
 
 # condições iniciais do problema
 n_bolinhas = 9
-num_bolinhas = np.arange(9)
+num_bolinhas = np.arange(n_bolinhas)
 
 # peso das bolinhas gerado aleatoriamente
-peso_padrao = np.random.rand(1)
-peso_bolinha = peso_padrao * np.ones([n_bolinhas])
+peso_padrao = 100 # numero mágico qualquer
+peso_bolinhas = peso_padrao * np.ones([n_bolinhas])
 
 # adicionado peso a mais em uma das bolinhas, aleatoriamente
 n_rand = np.random.randint(n_bolinhas)
-peso_bolinha[n_rand] += np.random.rand(1)
+peso_bolinhas[n_rand] += 1
 
-# embaralhamente das bolinhas
-np.random.shuffle(num_bolinhas)
+print("As bolinhas foram embaralhadas na seguinte ordem: " + str(num_bolinhas) + "\n")
 
 # separação em 3 grupos
 grupo_1 = num_bolinhas[0:3]
@@ -35,54 +34,41 @@ grupo_2 = num_bolinhas[3:6]
 grupo_3 = num_bolinhas[6:9]
 
 # pesagem de dois grupos de bolinhas
-peso_g1 = np.sum(peso_bolinha[grupo_1])
-peso_g2 = np.sum(peso_bolinha[grupo_2])
-# peso_g3 = np.sum(peso_bolinha[grupo_3])
-
-grupo_menor=np.array([])
+peso_g1 = np.sum(peso_bolinhas[grupo_1])
+peso_g2 = np.sum(peso_bolinhas[grupo_2])
 
 # comparação dos grupos de bolinhas (papel da balança)
 # seleção do grupo de bolinhas mais pesado
 print("Realizando a primeira pesagem e comparação...\n")
+
 if (peso_g1 > peso_g2):
-    grupo_menor = grupo_1
-    print('O Grupo 1 de bolinhas é o mais pesado, formado pelas bolinhas: ' + str(grupo_1) + '\n')
+    grupo_mais_pesado = grupo_1
 elif (peso_g2 > peso_g1):
-    grupo_menor = grupo_2
-    print('O Grupo 2 de bolinhas é o mais pesado, formado pelas bolinhas: ' + str(grupo_2) + '\n')
-elif (peso_g1 == peso_g2):
-    grupo_menor = grupo_3
-    print('O Grupo 3 de bolinhas é o mais pesado, formado pelas bolinhas: ' + str(grupo_3) + '\n')
+    grupo_mais_pesado = grupo_2
+else: # (peso_g1 == peso_g2)
+    grupo_mais_pesado = grupo_3
+print(f'O grupo mais pesado é formado pelas bolinhas: {grupo_mais_pesado} \n')
 
 ##### SEGUNDA PESAGEM
 
-# embaralhamente do segundo grupo de bolinhas
-np.random.shuffle(grupo_menor)
-
 # divisão em 3 grupos menores
-
-grupo_menor_1 = grupo_menor[0]
-grupo_menor_2 = grupo_menor[1]
-grupo_menor_3 = grupo_menor[2]
+bolinha_1 = grupo_mais_pesado[0]
+bolinha_2 = grupo_mais_pesado[1]
+bolinha_3 = grupo_mais_pesado[2]
 
 # pesagem de 2 grupos de bolinhas
-peso_menor_g1 = np.sum(peso_bolinha[grupo_menor_1])
-peso_menor_g2 = np.sum(peso_bolinha[grupo_menor_2])
-
-# peso_g3 = np.sum(peso_bolinha[grupo_menor_3])
+peso_bolinha_1 = peso_bolinhas[bolinha_1]
+peso_bolinha_2 = peso_bolinhas[bolinha_2]
 
 # comparação dos pesos do grupo menor
 # seleção da bolinha mais pesada
 print("Realizando a segunda pesagem e comparação...\n")
 
-if (peso_menor_g1 > peso_menor_g2):
-    grupo_menor = grupo_menor_1
-    print('A bolinha ' + str(grupo_menor) + ' é a mais pesada.')
+if (peso_bolinha_1 > peso_bolinha_2):
+    bolinha_mais_pesada = bolinha_1
+elif (peso_bolinha_2 > peso_bolinha_1):
+    bolinha_mais_pesada = bolinha_2
+else: #(peso_bolinha_1 == peso_bolinha_2)
+    bolinha_mais_pesada = bolinha_3
 
-elif (peso_menor_g2 > peso_menor_g1):
-    grupo_menor = grupo_menor_2
-    print('A bolinha ' + str(grupo_menor) + ' é a mais pesada.')
-
-elif (peso_menor_g1 == peso_menor_g2):
-    grupo_menor = grupo_menor_3
-    print('A bolinha ' + str(grupo_menor) + ' é a mais pesada.')
+print(f'A bolinha {bolinha_mais_pesada} é a mais pesada.')
